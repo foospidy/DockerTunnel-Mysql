@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# get ssh config and key file
+cp /tmp/.ssh/config /root/.ssh
+cp /tmp/.ssh/id_rsa_mysql /root/.ssh
+chown -R root:root /root/.ssh
+
+# launch ssh tunnel
+ssh -oStrictHostKeyChecking=no -g -4 -f -N -L3306:0.0.0.0:3306 mysql-tunnel
+
+# deamonize this process so we don't lose ssh fork
+while [ 0 -lt 1 ]
+do
+    sleep 60
+done
